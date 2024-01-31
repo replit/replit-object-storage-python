@@ -3,8 +3,9 @@ from unittest.mock import MagicMock, patch
 import pytest
 import requests
 from google.cloud import storage
-from replit.storage import DefaultBucketError
-from replit.storage import Client
+from replit.storage import Client, DefaultBucketError
+
+import os
 
 from tests.replit.storage.mocks import (
     build_mock_default_bucket_response,
@@ -53,7 +54,7 @@ def test_get_default_bucket_malformed_response(mock_get):
 
 def test_delete():
     result = Client("bucket-id").delete("object-name")
-    assert result is None
+    assert result == "bad"
 
 
 def test_download_as_bytes():

@@ -9,7 +9,6 @@ from typing import Optional
 import requests
 from google.auth import identity_pool
 from google.cloud import storage
-
 from replit.storage.config import REPLIT_ADC, REPLIT_DEFAULT_BUCKET_URL
 from replit.storage.errors import DefaultBucketError
 

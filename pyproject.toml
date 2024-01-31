@@ -38,13 +38,11 @@ exclude = [".cache"]
 # https://beta.ruff.rs/docs/configuration/
 indent-width = 4
 line-length = 88
-select = ['E', 'W', 'F', 'I', 'B', 'C4', 'ARG', 'SIM']
+select = ['E', 'W', 'F', 'I', 'B', 'D', 'C4', 'ARG', 'SIM']
 ignore = ['W291', 'W292', 'W293']
 
-[tool.ruff.lint]
-select = ["D"]
-
 [tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
 "tests/**/*" = ["D"]
 
 [tool.ruff.lint.pydocstyle]

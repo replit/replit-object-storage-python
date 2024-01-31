@@ -1,0 +1,51 @@
+version: v1.0
+name: replit-storage-python
+agent:
+  machine:
+    type: e1-standard-4
+    os_image: ubuntu2004
+blocks:
+  - name: cache
+    task:
+      jobs:
+        - name: cache deps
+          commands:
+            - sem-version python 3.10
+            - checkout --use-cache
+            - pip install poetry==1.2.0
+            - make install
+            - cache store
+    dependencies: []
+  - name: lint
+    task:
+      prologue:
+        commands:
+          - sem-version python 3.10
+          - checkout --use-cache
+          - git switch -c pr
+          - cache restore
+          - make install
+      jobs:
+        - name: make lint
+          commands:
+            - make lint
+    dependencies:
+      - cache
+  - name: test
+    matrix:
+    - env_vars: PYTHON_VERSION
+      values: ["3.10"]
+    task:
+      prologue:
+        commands:
+          - sem-version python $PYTHON_VERSION
+          - checkout --use-cache
+          - git switch -c pr
+          - cache restore
+          - make install
+      jobs:
+        - name: make test
+          commands:
+            - make test
+    dependencies:
+      - cache

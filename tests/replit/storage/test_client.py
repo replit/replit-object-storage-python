@@ -5,8 +5,6 @@ import requests
 from google.cloud import storage
 from replit.storage import Client, DefaultBucketError
 
-import os
-
 from tests.replit.storage.mocks import (
     build_mock_default_bucket_response,
     build_mock_gcs_client,
@@ -54,7 +52,7 @@ def test_get_default_bucket_malformed_response(mock_get):
 
 def test_delete():
     result = Client("bucket-id").delete("object-name")
-    assert result == "bad"
+    assert result is None
 
 
 def test_download_as_bytes():

@@ -1,0 +1,12 @@
+# Packager
+.pythonlibs
+.pytest_cache
+.ruff_cache
+.upm
+
+# Python
+__pycache__
+
+# Builds and Testing
+.coverage
+dist

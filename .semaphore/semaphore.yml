@@ -32,7 +32,7 @@ blocks:
             - make lint
     dependencies:
       - install deps
-  - name: test
+  - name: unit test
     task:
       prologue:
         commands:
@@ -43,8 +43,8 @@ blocks:
           - pip install poetry==1.5.1
           - make install
       jobs:
-        - name: make test
+        - name: make test-unit
           commands:
-            - make test
+            - make test-unit
     dependencies:
       - install deps

@@ -6,13 +6,13 @@ install:
 lint:
 	@poetry run ruff check src tests
 
-.PHONY: lint
+.PHONY: lint-fix
 lint-fix:
 	@poetry run ruff check src tests --fix
 
-.PHONY: test
-test:
-	@poetry run pytest --cov-report term-missing --cov=./src ./tests
+.PHONY: test-unit
+test-unit:
+	@poetry run pytest --cov-report term-missing --cov=./src ./tests/unit
 
 .PHONY: prerelease
 prerelease:

@@ -5,6 +5,7 @@
 .upm
 
 # Python
+.local
 __pycache__
 
 # Builds and Testing

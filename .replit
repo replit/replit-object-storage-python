@@ -12,6 +12,3 @@ language = "python3"
 [deployment]
 run = ["python3", "main.py"]
 deploymentTarget = "cloudrun"
-
-[objectStorage]
-defaultBucketID = "replit-objstore-b69b897f-5afe-4320-a376-74926fd41786"

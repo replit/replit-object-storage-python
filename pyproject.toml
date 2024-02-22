@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "replit.storage"
-version = "0.0.1.a3"
+name = "replit.object-storage"
+version = "0.0.1"
 description = "A library for interacting with Object Storage on Replit"
 authors = ["Repl.it <contact@repl.it>"]
 license = "ISC"

@@ -14,12 +14,16 @@ lint-fix:
 test-integration:
 	@poetry run pytest --cov-report term-missing --cov=./src ./tests/integration
 
+.PHONY: test-integration-multi-language
+test-integration-multi-language:
+	@tox
+
 .PHONY: test-unit
 test-unit:
 	@poetry run pytest --cov-report term-missing --cov=./src ./tests/unit
 
 .PHONY: prerelease
-prerelease: test-unit test-integration
+prerelease: test-unit test-integration-multi-language
 	@rm -rf dist
 	@poetry build
 

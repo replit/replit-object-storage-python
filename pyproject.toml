@@ -14,12 +14,11 @@ classifiers = [
 ]
 packages = [
   { include = "replit", from = "src" },
-  { include = "tests" }
 ]
 exclude = ["tests"]
 
 [tool.poetry.dependencies]
-python = ">=3.10.0,<3.11"
+python = ">=3.8.0,<3.13"
 google-cloud-storage = "^2.14.0"
 requests = "^2.31.0"
 
@@ -28,6 +27,7 @@ ruff = "^0.1.15"
 pytest = "^8.0.0"
 twine = "*"
 pytest-cov = "^4.1.0"
+tox = "^4.13.0"
 
 [tool.pyright]
 # https://github.com/microsoft/pyright/blob/main/docs/configuration.md

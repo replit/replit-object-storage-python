@@ -1,36 +1,40 @@
-# replit-storage-python
-The library for Replit Object Storage. Development should "just work" on Replit!
+# replit-object-storage-python
+The library for interacting with Replit's Object Storage service, on Replit.
 
-## Development
+## Usage
 
-To get setup, run:
-```bash
-make install
+### Setup
+
+Start by importing the Object Storage Client:
+```python
+from replit.object_storage import Client
 ```
 
-To run the linter, run:
-```bash
-make lint
+Then to use the Client:
+```python
+client = Client()
 ```
 
-or to fix (fixable) lint issues, run:
-```bash
-make lint-fix
+### Downloading an Object
+
+```python
+contents = client.download_as_text("file.json")
 ```
 
-To run tests, run:
-```bash
-make test
+### Uploading an Object
+
+```python
+client.upload_from_text("file.json", data)
 ```
 
-## Release
+### List Objects
 
-To check that the package builds, you can run:
-```bash
-make prerelease
+```python
+client.list()
 ```
 
-To perform a release, first bump the version in `pyproject.toml`. Then run:
-```bash
-make release
+### Delete an Object
+
+```python
+contents = client.delete("file.json")
 ```

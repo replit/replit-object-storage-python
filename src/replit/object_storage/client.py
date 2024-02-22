@@ -10,13 +10,13 @@ import requests
 from google.auth import identity_pool
 from google.cloud import storage
 from google.cloud.exceptions import NotFound
-from replit.storage.config import REPLIT_ADC, REPLIT_DEFAULT_BUCKET_URL
-from replit.storage.errors import (
+from replit.object_storage.config import REPLIT_ADC, REPLIT_DEFAULT_BUCKET_URL
+from replit.object_storage.errors import (
   DefaultBucketError,
   ObjectNotFoundError,
   google_error_handler,
 )
-from replit.storage.object import Object
+from replit.object_storage.object import Object
 
 
 class Client:

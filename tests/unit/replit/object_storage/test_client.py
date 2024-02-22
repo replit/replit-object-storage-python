@@ -3,9 +3,9 @@ from unittest.mock import MagicMock, patch
 import pytest
 import requests
 from google.cloud import storage
-from replit.storage import Client, DefaultBucketError
+from replit.object_storage import Client, DefaultBucketError
 
-from tests.unit.replit.storage.mocks import (
+from tests.unit.replit.object_storage.mocks import (
     build_mock_default_bucket_response,
     build_mock_gcs_client,
 )

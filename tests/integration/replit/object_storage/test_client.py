@@ -2,8 +2,8 @@ from tempfile import TemporaryDirectory
 from uuid import uuid4
 
 import pytest
-from replit.storage import Client, Object
-from replit.storage.errors import ObjectNotFoundError
+from replit.object_storage import Client, Object
+from replit.object_storage.errors import ObjectNotFoundError
 
 TEST_FILE_CONTENTS = "Hello World!"
 

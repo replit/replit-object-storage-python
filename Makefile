@@ -19,7 +19,7 @@ test-unit:
 	@poetry run pytest --cov-report term-missing --cov=./src ./tests/unit
 
 .PHONY: prerelease
-prerelease:
+prerelease: test-unit test-integration
 	@rm -rf dist
 	@poetry build
 

@@ -2,9 +2,11 @@
 .pythonlibs
 .pytest_cache
 .ruff_cache
+.tox
 .upm
 
 # Python
+.local
 __pycache__
 
 # Builds and Testing

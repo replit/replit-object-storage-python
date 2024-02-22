@@ -3,9 +3,9 @@ from unittest.mock import MagicMock, patch
 import pytest
 import requests
 from google.cloud import storage
-from replit.storage import Client, DefaultBucketError
+from replit.object_storage import Client, DefaultBucketError
 
-from tests.unit.replit.storage.mocks import (
+from tests.unit.replit.object_storage.mocks import (
     build_mock_default_bucket_response,
     build_mock_gcs_client,
 )
@@ -50,6 +50,11 @@ def test_get_default_bucket_malformed_response(mock_get):
     Client().exists("object-name")
 
 
+def test_copy():
+  result = Client("bucket-id").copy("object-name", "dest-object-name")
+  assert result is None
+
+
 def test_delete():
   result = Client("bucket-id").delete("object-name")
   assert result is None
@@ -65,12 +70,6 @@ def test_download_as_string():
   assert result == "test-text"
 
 
-def test_download_to_file():
-  dest_file = MagicMock()
-  result = Client("bucket-id").download_to_file("object-name", dest_file)
-  assert result is None
-
-
 def test_download_to_filename():
   result = Client("bucket-id").download_to_filename("object-name",
                                                     "dest-filename")
@@ -83,10 +82,9 @@ def test_exists():
   assert result
 
 
-def test_upload_from_file():
-  src_file = MagicMock()
-  result = Client("bucket-id").upload_from_file("object-name", src_file)
-  assert result is None
+def test_list():
+  result = Client("bucket-id").list("object-name")
+  assert isinstance(result, list)
 
 
 def test_upload_from_filename():

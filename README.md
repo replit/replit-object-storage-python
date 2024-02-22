@@ -18,13 +18,13 @@ client = Client()
 ### Downloading an Object
 
 ```python
-contents = client.download_as_string("file.json")
+contents = client.download_as_text("file.json")
 ```
 
 ### Uploading an Object
 
 ```python
-client.upload_from_string("file.json", data)
+client.upload_from_text("file.json", data)
 ```
 
 ### List Objects

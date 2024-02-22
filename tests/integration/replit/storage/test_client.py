@@ -122,12 +122,11 @@ class TestDownloadToFilename:
     client = Client()
 
     tmpdir = TemporaryDirectory()
-    with tmpdir:
-      with pytest.raises(ObjectNotFoundError):
-        client.download_to_filename(
-          f"{testdir}/download-to-filename-2.txt",
-          f"{tmpdir.name}/download-to-filename-2.txt"
-        )
+    with tmpdir, pytest.raises(ObjectNotFoundError):
+      client.download_to_filename(
+        f"{testdir}/download-to-filename-2.txt",
+        f"{tmpdir.name}/download-to-filename-2.txt"
+      )
 
 
 class TestExists:

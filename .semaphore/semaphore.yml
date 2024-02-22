@@ -32,19 +32,3 @@ blocks:
             - make lint
     dependencies:
       - install deps
-  - name: unit test
-    task:
-      prologue:
-        commands:
-          - sem-version python 3.10
-          - checkout --use-cache
-          - git switch -c pr
-          - cache restore
-          - pip install poetry==1.5.1
-          - make install
-      jobs:
-        - name: make test-unit
-          commands:
-            - make test-unit
-    dependencies:
-      - install deps

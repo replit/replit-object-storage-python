@@ -32,7 +32,7 @@ blocks:
             - make lint
     dependencies:
       - install deps
-  - name: unit test
+  - name: test-unit
     task:
       prologue:
         commands:

@@ -89,7 +89,7 @@ class Client:
     return self.__object(object_name).download_as_bytes()
 
   @google_error_handler
-  def download_as_string(self, object_name: str) -> str:
+  def download_as_text(self, object_name: str) -> str:
     """Download the contents an object as a string.
 
     Args:
@@ -163,7 +163,7 @@ class Client:
     self.__object(dest_object_name).upload_from_filename(src_filename)
 
   @google_error_handler
-  def upload_from_string(self, dest_object_name: str, src_data: str) -> None:
+  def upload_from_text(self, dest_object_name: str, src_data: str) -> None:
     """Upload an object from a string.
 
     Args:

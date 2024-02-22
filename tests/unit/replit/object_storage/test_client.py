@@ -65,8 +65,8 @@ def test_download_as_bytes():
   assert result == str.encode("test-bytes")
 
 
-def test_download_as_string():
-  result = Client("bucket-id").download_as_string("object-name")
+def test_download_as_text():
+  result = Client("bucket-id").download_as_text("object-name")
   assert result == "test-text"
 
 
@@ -93,6 +93,6 @@ def test_upload_from_filename():
   assert result is None
 
 
-def test_upload_from_string():
-  result = Client("bucket-id").upload_from_string("object-name", "src-text")
+def test_upload_from_text():
+  result = Client("bucket-id").upload_from_text("object-name", "src-text")
   assert result is None

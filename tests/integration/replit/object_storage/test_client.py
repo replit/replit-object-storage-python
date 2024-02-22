@@ -22,7 +22,7 @@ class TestCopy:
   @staticmethod
   def test_upload_then_copy(testdir):
     client = Client()
-    client.upload_from_string(f"{testdir}/copy-1-1.txt", TEST_FILE_CONTENTS)
+    client.upload_from_text(f"{testdir}/copy-1-1.txt", TEST_FILE_CONTENTS)
 
     client.copy(f"{testdir}/copy-1-1.txt", f"{testdir}/copy-1-2.txt")
     exists = client.exists(f"{testdir}/copy-1-2.txt")
@@ -41,7 +41,7 @@ class TestDelete:
   @staticmethod
   def test_upload_then_delete(testdir):
     client = Client()
-    client.upload_from_string(f"{testdir}/delete-1.txt", TEST_FILE_CONTENTS)
+    client.upload_from_text(f"{testdir}/delete-1.txt", TEST_FILE_CONTENTS)
     exists = client.exists(f"{testdir}/delete-1.txt")
     assert exists
 
@@ -70,7 +70,7 @@ class TestDownloadAsBytes:
   @staticmethod
   def test_upload_then_download(testdir):
     client = Client()
-    client.upload_from_string(f"{testdir}/download-as-bytes-1.txt",
+    client.upload_from_text(f"{testdir}/download-as-bytes-1.txt",
                               TEST_FILE_CONTENTS)
 
     result = client.download_as_bytes(f"{testdir}/download-as-bytes-1.txt")
@@ -83,15 +83,15 @@ class TestDownloadAsBytes:
       client.download_as_bytes(f"{testdir}/download-as-bytes-2.txt")
 
 
-class TestDownloadAsString:
+class TestDownloadAsText:
 
   @staticmethod
   def test_upload_then_download(testdir):
     client = Client()
-    client.upload_from_string(f"{testdir}/download-as-string-1.txt",
+    client.upload_from_text(f"{testdir}/download-as-string-1.txt",
                               TEST_FILE_CONTENTS)
 
-    result = client.download_as_string(f"{testdir}/download-as-string-1.txt")
+    result = client.download_as_text(f"{testdir}/download-as-string-1.txt")
     assert result == TEST_FILE_CONTENTS
 
   @staticmethod
@@ -106,7 +106,7 @@ class TestDownloadToFilename:
   @staticmethod
   def test_upload_then_download(testdir):
     client = Client()
-    client.upload_from_string(f"{testdir}/download-to-filename-1.txt",
+    client.upload_from_text(f"{testdir}/download-to-filename-1.txt",
                               TEST_FILE_CONTENTS)
 
     tmpdir = TemporaryDirectory()
@@ -134,7 +134,7 @@ class TestExists:
   @staticmethod
   def test_exists(testdir):
     client = Client()
-    client.upload_from_string(f"{testdir}/exists-1.txt", TEST_FILE_CONTENTS)
+    client.upload_from_text(f"{testdir}/exists-1.txt", TEST_FILE_CONTENTS)
 
     exists = client.exists(f"{testdir}/exists-1.txt")
     assert exists
@@ -151,9 +151,9 @@ class TestList:
   @staticmethod
   def test_upload_multiple_then_list(testdir):
     client = Client()
-    client.upload_from_string(f"{testdir}/list/list-1-1.txt",
+    client.upload_from_text(f"{testdir}/list/list-1-1.txt",
                               TEST_FILE_CONTENTS)
-    client.upload_from_string(f"{testdir}/list/list-1-2.txt",
+    client.upload_from_text(f"{testdir}/list/list-1-2.txt",
                               TEST_FILE_CONTENTS)
     objects = client.list(prefix=f"{testdir}/list")
     assert objects == [
@@ -176,17 +176,17 @@ class TestUploadfromFilename:
       client.upload_from_filename(f"{testdir}/upload-from-filename-1.txt",
                                   f"{tmpdir.name}/upload-from-filename-1.txt")
 
-    result = client.download_as_string(f"{testdir}/upload-from-filename-1.txt")
+    result = client.download_as_text(f"{testdir}/upload-from-filename-1.txt")
     assert result == TEST_FILE_CONTENTS
 
 
-class TestUploadFromString:
+class TestUploadFromText:
 
   @staticmethod
   def test_upload_then_download(testdir):
     client = Client()
-    client.upload_from_string(f"{testdir}/upload-from-string-1.txt",
+    client.upload_from_text(f"{testdir}/upload-from-string-1.txt",
                               TEST_FILE_CONTENTS)
 
-    result = client.download_as_string(f"{testdir}/upload-from-string-1.txt")
+    result = client.download_as_text(f"{testdir}/upload-from-string-1.txt")
     assert result == TEST_FILE_CONTENTS

@@ -39,7 +39,7 @@ class UnauthorizedError(Exception):
   pass
 
 
-def google_error_handler(func):
+def _google_error_handler(func):
   """Wraps functions that call GCP APIs and handles common errors.
 
   Common errors are re-raised in more digestable formats, less common errors are passed

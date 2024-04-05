@@ -1,0 +1,24 @@
+{
+  "items": [
+    {
+      "items": [
+        {
+          "items": [
+            "replit/object_storage/__init__",
+            "replit/object_storage/_config",
+            "replit/object_storage/client",
+            "replit/object_storage/errors",
+            "replit/object_storage/object"
+          ],
+          "label": "replit.object_storage",
+          "type": "category"
+        },
+        "replit/__init__"
+      ],
+      "label": "replit",
+      "type": "category"
+    }
+  ],
+  "label": "Reference",
+  "type": "category"
+}

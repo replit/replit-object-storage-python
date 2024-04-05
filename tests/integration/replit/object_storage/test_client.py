@@ -180,6 +180,19 @@ class TestUploadfromFilename:
     assert result == TEST_FILE_CONTENTS
 
 
+class TestUploadFromBytes:
+
+  @staticmethod
+  def test_upload_then_download(testdir):
+    client = Client()
+    contents = bytes(TEST_FILE_CONTENTS, 'utf-8')
+    client.upload_from_bytes(f"{testdir}/upload-from-bytes-1.txt", contents)
+  
+    result = client.download_as_bytes(f"{testdir}/upload-from-bytes-1.txt")
+    assert result == contents
+
+
+
 class TestUploadFromText:
 
   @staticmethod

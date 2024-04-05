@@ -23,6 +23,13 @@ To run tests, run:
 make test
 ```
 
+## Docs
+
+To generate the markdown docs, run:
+```bash
+make docs
+```
+
 ## Release
 
 To check that the package builds, you can run:

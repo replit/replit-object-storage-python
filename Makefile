@@ -1,3 +1,7 @@
+.PHONY: docs
+docs:
+	@poetry run pydoc-markdown
+
 .PHONY: install
 install:
 	@poetry install
@@ -16,7 +20,7 @@ test-integration:
 
 .PHONY: test-integration-multi-language
 test-integration-multi-language:
-	@tox
+	@poetry run tox
 
 .PHONY: test-unit
 test-unit:

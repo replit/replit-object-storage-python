@@ -4,17 +4,18 @@ Note: this Client is a thin wrapper over the GCS Python Library. As a result,
 many docstrings are borrowed from the underlying library.
 """
 
-from typing import List, Optional
+from typing import List, Optional, Union
 
 import requests
 from google.auth import identity_pool
 from google.cloud import storage
 from google.cloud.exceptions import NotFound
-from replit.object_storage.config import REPLIT_ADC, REPLIT_DEFAULT_BUCKET_URL
+
+from replit.object_storage._config import REPLIT_ADC, REPLIT_DEFAULT_BUCKET_URL
 from replit.object_storage.errors import (
   DefaultBucketError,
   ObjectNotFoundError,
-  google_error_handler,
+  _google_error_handler,
 )
 from replit.object_storage.object import Object
 
@@ -23,7 +24,15 @@ class Client:
   """Client manages interactions with Replit Object Storage.
     
   If multiple buckets are used within an application, one Client should be used
-  per bucket.
+  per bucket
+
+  Any method may return one of the following errors:
+  - `BucketNotFoundError`: If the bucket configured for the client could not be found.
+  - `DefaultBucketError`: If no bucket was explicitly configured and an error occurred
+      when resolving the default bucket.
+  - `ForbiddenError`: If access to the requested resource is not allowed.
+  - `TooManyRequestsError`: If rate limiting occurs.
+  - `UnauthorizedError`: If the requested operation is not allowed.
   """
 
   __gcs_client: storage.Client
@@ -45,7 +54,7 @@ class Client:
     self.__gcs_client = storage.Client(credentials=creds, project="")
     self.__gcs_bucket_handle = None
 
-  @google_error_handler
+  @_google_error_handler
   def copy(self, object_name: str, dest_object_name: str) -> None:
     """Copies the specified object within the same bucket.
 
@@ -54,6 +63,9 @@ class Client:
     Args:
         object_name: The full path of the object to be copied.
         dest_object_name: The full path to copy the object to.
+
+    Raises:
+        ObjectNotFoundError: If the source object could not be found.
     """
     source_object = self.__object(object_name)
     bucket = self.__bucket()
@@ -63,7 +75,7 @@ class Client:
       dest_object_name,
     )
 
-  @google_error_handler
+  @_google_error_handler
   def delete(self, object_name: str, ignore_not_found: bool = False) -> None:
     """Deletes an object from Object Storage.
 
@@ -71,6 +83,9 @@ class Client:
         object_name: The name of the object to be deleted.
         ignore_not_found: Whether an error should be raised if the object does not
           exist.
+
+    Raises:
+        ObjectNotFoundError: If the object could not be found.
     """
     try:
       return self.__object(object_name).delete()
@@ -79,44 +94,62 @@ class Client:
         return
       raise ObjectNotFoundError("The requested object could not be found.") from err
 
-  @google_error_handler
+  @_google_error_handler
   def download_as_bytes(self, object_name: str) -> bytes:
     """Download the contents an object as a bytes object.
 
     Args:
         object_name: The name of the object to be downloaded.
+
+    Returns:
+        The raw byte representation of the object's contents.
+
+    Raises:
+        ObjectNotFoundError: If the object could not be found.
     """
     return self.__object(object_name).download_as_bytes()
 
-  @google_error_handler
+  @_google_error_handler
   def download_as_text(self, object_name: str) -> str:
     """Download the contents an object as a string.
 
     Args:
         object_name: The name of the object to be downloaded.
+
+    Returns:
+        The object's contents as a UTF-8 encoded string.
+
+    Raises:
+        ObjectNotFoundError: If the object could not be found.
     """
     return self.__object(object_name).download_as_text()
 
-  @google_error_handler
+  @_google_error_handler
   def download_to_filename(self, object_name: str, dest_filename: str) -> None:
     """Download the contents an object into a file on the local disk.
 
     Args:
         object_name: The name of the object to be downloaded.
         dest_filename: The filename of the file on the local disk to be written.
+
+    Raises:
+        ObjectNotFoundError: If the object could not be found.
     """
     return self.__object(object_name).download_to_filename(dest_filename)
 
-  @google_error_handler
+  @_google_error_handler
   def exists(self, object_name: str) -> bool:
     """Checks if an object exist.
 
     Args:
         object_name: The name of the object to be checked.
+
+    Returns:
+        Whether or not the object exists.
     """
     return self.__object(object_name).exists()
 
-  @google_error_handler
+  @_google_error_handler
   def list(
       self,
       end_offset: Optional[str] = None,
@@ -140,7 +173,9 @@ class Client:
             lexicographically equal to or after start_offset. If endOffset is
             also set, the objects listed have names between start_offset
             (inclusive) and end_offset (exclusive).
-        
+
+    Returns:
+        A list of objects matching the given query parameters. 
     """
     iter = self.__bucket().list_blobs(
         end_offset=end_offset,
@@ -151,7 +186,7 @@ class Client:
     )
     return [Object(name=object.name) for object in iter]
 
-  @google_error_handler
+  @_google_error_handler
   def upload_from_filename(self, dest_object_name: str,
                            src_filename: str) -> None:
     """Upload an object from a file on the local disk.
@@ -162,8 +197,22 @@ class Client:
     """
     self.__object(dest_object_name).upload_from_filename(src_filename)
 
-  @google_error_handler
-  def upload_from_text(self, dest_object_name: str, src_data: str) -> None:
+  @_google_error_handler
+  def upload_from_bytes(self, dest_object_name: str, src_data: bytes) -> None:
+    """Upload an object from bytes.
+
+    Args:
+        dest_object_name: The name of the object to be uploaded.
+        src_data: The bytes to be uploaded.
+    """
+    self.__object(dest_object_name).upload_from_string(src_data)
+
+  @_google_error_handler
+  def upload_from_text(
+    self,
+    dest_object_name: str,
+    src_data: Union[bytes, str]
+  ) -> None:
     """Upload an object from a string.
 
     Args:

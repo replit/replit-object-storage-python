@@ -93,6 +93,12 @@ def test_upload_from_filename():
   assert result is None
 
 
+def test_upload_from_bytes():
+  result = Client("bucket-id").upload_from_bytes("object-name",
+                                                 bytes("src-text", "utf-8"))
+  assert result is None
+
+
 def test_upload_from_text():
   result = Client("bucket-id").upload_from_text("object-name", "src-text")
   assert result is None

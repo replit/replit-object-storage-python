@@ -10,7 +10,6 @@ import requests
 from google.auth import identity_pool
 from google.cloud import storage
 from google.cloud.exceptions import NotFound
-
 from replit.object_storage._config import REPLIT_ADC, REPLIT_DEFAULT_BUCKET_URL
 from replit.object_storage.errors import (
   DefaultBucketError,

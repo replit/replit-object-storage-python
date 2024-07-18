@@ -6,6 +6,10 @@ docs:
 install:
 	@poetry install
 
+.PHONY: install-dev
+install-dev:
+	@poetry install --with=dev
+
 .PHONY: lint
 lint:
 	@poetry run ruff check src tests
@@ -15,15 +19,15 @@ lint-fix:
 	@poetry run ruff check src tests --fix
 
 .PHONY: test-integration
-test-integration:
+test-integration: install-dev
 	@poetry run pytest --cov-report term-missing --cov=./src ./tests/integration
 
-.PHONY: test-integration-multi-language
+.PHONY: install-dev test-integration-multi-language
 test-integration-multi-language:
 	@poetry run tox
 
 .PHONY: test-unit
-test-unit:
+test-unit: install-dev
 	@poetry run pytest --cov-report term-missing --cov=./src ./tests/unit
 
 .PHONY: prerelease

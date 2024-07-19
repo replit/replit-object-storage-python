@@ -6,6 +6,11 @@ name: Upload Python Package
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'What version to use for the release'
+        required: true
 
 jobs:
   deploy:
@@ -27,7 +32,10 @@ jobs:
 
     - name: Set release version
       run: |
-        tag="${GITHUB_REF_NAME}"
+        tag="${{ github.event.inputs.version }}"
+        if [ -z "$tag" ]; then
+          tag="${GITHUB_REF_NAME}"
+        fi
         version="${tag#v}"  # Strip leading v
 
         # Bump poetry tag

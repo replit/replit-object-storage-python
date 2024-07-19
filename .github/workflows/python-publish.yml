@@ -35,6 +35,7 @@ jobs:
 
     - name: Build and publish
       run: |
+        poetry build
         TWINE_USERNAME=__token__ \
         TWINE_PASSWORD="${{ secrets.PYPI_TOKEN }}" \
-        make release
+        poetry run twine upload dist/*

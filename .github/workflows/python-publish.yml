@@ -43,6 +43,7 @@ jobs:
 
     - name: Build and publish
       run: |
+        poetry install
         poetry build
         TWINE_USERNAME=__token__ \
         TWINE_PASSWORD="${{ secrets.PYPI_TOKEN }}" \

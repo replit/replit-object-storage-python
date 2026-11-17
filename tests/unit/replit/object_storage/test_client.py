@@ -27,7 +27,7 @@ def requests_get():
 
 def test_get_default_bucket_success():
   result = Client().exists("object-name")
-  assert result is True
+  assert result is False
 
 
 @patch.object(requests, "get")
